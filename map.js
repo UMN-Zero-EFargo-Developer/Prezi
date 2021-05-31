@@ -3,6 +3,25 @@ currentMarkers = [];
 countryMarkers = [];
 var currentVisual = '';
 
+const tfcColor = [[0, '#afacac'],
+                    [1, '#006A0C'],
+                    [2, '#009A11'],
+                    [3, '#00BC15'],
+                    [4, '#02DE1A'],
+                    [5, '#08FF23']]
+const renewableColor = [[0, '#afacac'],
+                  [1, '#508F00'],
+                  [2, '#64B200'],
+                  [3, '#73CD00'],
+                  [4, '#90F312'],
+                  [5, '#B9FF61']]
+
+const co2Color = [[0, '#afacac'],
+                  [1, '#37304A'],
+                  [2, '#5A5174'],
+                  [3, '#776D94'],
+                  [4, '#998FB6'],
+                  [5, '#C2B8DF']]                  
 mapboxgl.accessToken = 'pk.eyJ1IjoiY29kZXJsZWUxMjMiLCJhIjoiY2ttN3ZyNXRoMGoycDJubnVvZXVrOWplZSJ9.xq_e59PlJXCWyQjl3cqx7g';
 map = new mapboxgl.Map({
   container: 'map',
@@ -36,14 +55,7 @@ function TFC() {
       'paint': {
         'fill-color': {
           property: 'ID', // this will be your density property form you geojson
-          stops: [
-            [0, '#afacac'],
-            [1, '#980101'],
-            [2, '#B40202'],
-            [3, '#CA0000'],
-            [4, '#E20000'],
-            [5, '#FF0000'],
-          ]
+          stops: tfcColor
         }
       }
     });
@@ -66,7 +78,7 @@ function TFC() {
   openDescriptionModal();
 
   legend.innerHTML = ""
-  var colors = ['#980101', '#b40202', '#ca0000', '#e20000', '#ff0000', '#afacac'];
+  var colors = ['#006382', '#0088B4', '#009DCE', '#00B6F0', '#37CFFF', '#afacac'];
   for (i = 0; i < colors.length; i++) {
     var color = colors[i];
     var item = document.createElement('div');
@@ -109,14 +121,7 @@ function CO2() {
     'paint': {
       'fill-color': {
         property: 'ID', // this will be your density property form you geojson
-        stops: [
-          [0, '#afacac'],
-          [1, '#C5CC00'],
-          [2, '#DDE500'],
-          [3, '#F6FF00'],
-          [4, '#F3FA4A'],
-          [5, '#FCFFAD'],
-        ]
+        stops: co2Color
       }
     }
   });
@@ -198,14 +203,7 @@ function Renewable() {
     'paint': {
       'fill-color': {
         property: 'ID', // this will be your density property form you geojson
-        stops: [
-          [0, '#afacac'],
-          [1, '#006A0C'],
-          [2, '#009A11'],
-          [3, '#00BC15'],
-          [4, '#02DE1A'],
-          [5, '#08FF23'],
-        ]
+        stops: renewableColor
       }
     }
   });
@@ -285,11 +283,11 @@ function loadMap(sourceData) {
           property: 'ID', // this will be your density property form you geojson
           stops: [
             [0, '#afacac'],
-            [1, '#980101'],
-            [2, '#B40202'],
-            [3, '#CA0000'],
-            [4, '#E20000'],
-            [5, '#FF0000'],
+            [1, '#383636'],
+            [2, '#5A5555'],
+            [3, '#7A7373'],
+            [4, '#9E9898'],
+            [5, '#C5BEBE'],
           ]
         }
       }
@@ -340,7 +338,6 @@ function loadMap(sourceData) {
         addCountryMarkers()
       } else {
         addMarkers();
-        deleteCountryMarkers()
       }
       lastZoom = currentZoom;
     });
@@ -1159,6 +1156,8 @@ function addMarkers() {
     .setLngLat([-0.6895645482155714, 52.36328596348923])
     .addTo(map);
   currentMarkers.push(curr);
+
+  console.log(currentMarkers[0]._element.onclick);
 }
 
 function addCountryMarkers() {

@@ -12,23 +12,25 @@ fetch(dataUrl("CO2PerCap", null, "2010", "2010"))
 
 /**
  * 
- * @param {String} factor - options: [ TFCShareBySector, CO2PerCap, SDG72 ]
- * @param {String} country - default value is "USA"
- * @param {String} startYear - Optional parameter, default value is "1990"
+ * @param {String} factor - Options: "TFCShareBySector" | "CO2PerCap" | "SDG72" 
+ * @param {String} country - Optional
+ * @param {String} [startYear='1990']
+ * @param {String} endYear
  * @returns 
  */
-function dataUrl(factor, country, startYear, endYear){
+function dataUrl(factor, country, startYear=1990, endYear){
     let url = `https://api.iea.org/stats/indicator/${factor}?`;
     if(country) {
-        url += `countries=${country}`;
+        url += `countries=${country}&`;
     }
     if (startYear) {
-        url += `startYear=${startYear}`;
+        url += `startYear=${startYear}&`;
     }
     if (endYear) {
-        url += `&endYear=${endYear}`
+        url += `endYear=${endYear}`
     }
     console.log(url)
     return url;
 }
 
+dataUrl()
